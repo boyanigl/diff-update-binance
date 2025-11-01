@@ -9,6 +9,8 @@ class OrderBook {
 	public:
 		OrderBook() : bids(), asks() {}
 		OrderBook(const std::vector<Order<PriceQtyType>>& bidOrders, const std::vector<Order<PriceQtyType>>& askOrders) : bids(bidOrders), asks(askOrders) {}
+		OrderBook(const OrderBook&) = delete;
+    	OrderBook& operator=(const OrderBook&) = delete;
 		~OrderBook() {}
 		void printOrderBook() const {
 			std::cout << "Bids:\n";

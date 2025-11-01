@@ -22,9 +22,9 @@ private:
 
     Node* root;
 
-    int height(Node* n) { return n ? n->height : 0; }
+    inline int height(Node* n) { return n ? n->height : 0; }
 
-    int getBalance(Node* n) { return n ? height(n->left) - height(n->right) : 0; }
+    inline int getBalance(Node* n) { return n ? height(n->left) - height(n->right) : 0; }
 
     // Rotations
     Node* rotateRight(Node* y) {
@@ -214,6 +214,8 @@ public:
 			updateOrder(order);
 		}
 	}
+    Orders(const Orders&) = delete;
+    Orders& operator=(const Orders&) = delete;
     ~Orders() { clear(root); }
 
     // void addOrder(const T& order) { 
