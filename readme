@@ -1,0 +1,21 @@
+Orderbook is being realized with the help of self balancing binary search tree since 
+the main goal is to have fast operations when updating (inserting/deletion of orders)
+and to have easy access to the biggest/smallest bid/ask.
+
+Template typing is used when creating the classes used in the proposed solution with the idea of
+nevertheless the received data would be of type double, due to that operations with double are perfomed
+by the FPU and are more costly than the simple integer operations, the Orderbook could be created and managed
+as of Orders of unsigned integer with the size of 8 bytes by this we improve the average speed performance.
+
+
+Different Orderbooks could be created for each of the different symbol pairs in the binance exchange
+and external logic will be needed to be deciding after receiving the event which orderbook to be fuilfilled.
+
+
+Time complexity for inserting and deletion is O(log n).
+Time complexity for getting max/min element is currently O(log n) which
+could be reduced to constant if we have 2 more pointers which to be updated 
+with each insertion/deletion.
+
+
+In Tests.cpp are both realized Unit testing and latency benchmark testing.
