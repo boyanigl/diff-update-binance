@@ -3,21 +3,21 @@
 
 typedef unsigned long long uint64;
 
-template <typename G>
+template <typename PriceQtyType>
 struct Order {
-    G price;
-    G quantity;
+    PriceQtyType price;
+    PriceQtyType quantity;
 };
 
-template <typename T>
+template <typename OrderType>
 class Orders {
 private:
     struct Node {
-        T data;
+        OrderType data;
         Node* left;
         Node* right;
         unsigned short height;
-        Node(const T& d) : data(d), left(nullptr), right(nullptr), height(1) {}
+        Node(const OrderType& d) : data(d), left(nullptr), right(nullptr), height(1) {}
     };
 
     Node* root;
@@ -55,7 +55,7 @@ private:
     }
 
     // Recursive insert OR only setting quantity if existing node with balancing
-    Node* insertOrSetQuantity(Node* node, const T& key) {
+    Node* insertOrSetQuantity(Node* node, const OrderType& key) {
         if (!node) {
             return new Node(key);
         }
@@ -118,7 +118,7 @@ private:
     }
 
     // Remove node (if needed)
-    Node* removeNode(Node* node, const T& key) {
+    Node* removeNode(Node* node, const OrderType& key) {
         if (!node)
             return node;
 
@@ -179,7 +179,7 @@ private:
         if (!root)
             return;
         print(root->left);
-        printf("Price: %.2f, Quantity: %.2f\n", root->data.price, root->data.quantity);
+        printf("Price: %, Quantity: %\n", root->data.price, root->data.quantity);
         print(root->right);
     }
 
@@ -199,7 +199,7 @@ private:
     printStructure(node->left, depth + 1);
 	}
 
-    void removeOrder(const T& order) { 
+    void removeOrder(const OrderType& order) { 
 		/* Deletion in Orders is O(logn) in Time complexity*/
 		root = removeNode(root, order); 
 	}
@@ -207,10 +207,10 @@ private:
 
 public:
     Orders() : root(nullptr) {}
-    Orders(std::vector<T> orders) : root(nullptr) {
+    Orders(std::vector<OrderType> orders) : root(nullptr) {
 		/* Constructor with argument of vector of type Order*/
 		/* Needed for the initial snapshot loading*/
-		for(const T order : orders){
+		for(const OrderType order : orders){
 			updateOrder(order);
 		}
 	}
@@ -222,19 +222,16 @@ public:
 	// }
 
 
-	void updateOrder(const T& order){
+	void updateOrder(const OrderType& order){
 		/* Update in Orders is O(logn) in Time complexity*/
-		// Order<uint64> tempOrder;
-		// tempOrder.quantity = static_cast<uint64>(order.quantity * 1e8); // to avoid float/double precision issues
-		// tempOrder.price = static_cast<uint64>(order.price * 1e8) ; 
-		if(order.quantity == 0u){
+		if(order.quantity == 0){
 			removeOrder(order);
 		}else{
 			root = insertOrSetQuantity(root, order);
 		}
 	}
 
-    void printOrders() const{ //print(root);
+    void printOrders() const{
 							
 		printStructure(root); 
 	}

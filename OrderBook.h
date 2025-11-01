@@ -1,14 +1,14 @@
 #ifndef ORDER_BOOOK_H
 #define ORDER_BOOOK_H
 
-template <typename T>
+template <typename PriceQtyType>
 class OrderBook {
 	private:
-		Orders<Order<T>> bids;
-		Orders<Order<T>> asks;
+		Orders<Order<PriceQtyType>> bids;
+		Orders<Order<PriceQtyType>> asks;
 	public:
 		OrderBook() : bids(), asks() {}
-		OrderBook(const std::vector<Order<T>>& bidOrders, const std::vector<Order<T>>& askOrders) : bids(bidOrders), asks(askOrders) {}
+		OrderBook(const std::vector<Order<PriceQtyType>>& bidOrders, const std::vector<Order<PriceQtyType>>& askOrders) : bids(bidOrders), asks(askOrders) {}
 		~OrderBook() {}
 		void printOrderBook() const {
 			std::cout << "Bids:\n";
@@ -16,23 +16,23 @@ class OrderBook {
 			std::cout << "Asks:\n";
 			asks.printOrders();
 		}
-		T getBestBid() const {
+		PriceQtyType getBestBid() const {
 			return bids.getMaxPrice();
 		}
 
-		T getBestAsk() const {
+		PriceQtyType getBestAsk() const {
 			return asks.getMinPrice();
 		}
 
-		T getSpread() const {
+		PriceQtyType getSpread() const {
 			return asks.getMinPrice() - bids.getMaxPrice();
 		}
 
-		void updateBook(const std::vector<Order<T>>& bidUpdates, const std::vector<Order<T>>& askUpdates) {
-			for (const Order<T>& bid : bidUpdates) {
+		void updateBook(const std::vector<Order<PriceQtyType>>& bidUpdates, const std::vector<Order<PriceQtyType>>& askUpdates) {
+			for (const Order<PriceQtyType>& bid : bidUpdates) {
 				bids.updateOrder(bid);
 			}
-			for (const Order<T>& ask : askUpdates) {
+			for (const Order<PriceQtyType>& ask : askUpdates) {
 				asks.updateOrder(ask);
 			}
 		}
