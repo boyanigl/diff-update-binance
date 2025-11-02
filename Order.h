@@ -139,7 +139,9 @@ private:
 				delete node;
 				return nullptr;
             }else if (!node->left || !node->right) {
-                node = node->left ? node->left : node->right;
+                Node *temp = node->left ? node->left : node->right;
+                delete node;
+                node = temp;
             }else{
                 Node* minNodeFromRightTree = minValueNode(node->right);
                 node->data = minNodeFromRightTree->data;
