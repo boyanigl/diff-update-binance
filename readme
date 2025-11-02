@@ -13,9 +13,19 @@ and external logic will be needed to be deciding after receiving the event which
 
 
 Time complexity for inserting and deletion is O(log n).
+Time complexity for getting max/min element is currently O(log n).
+
+In Tests.cpp are both realized Unit testing and latency benchmark testing.
+
+
+Future Improvements would be :
 Time complexity for getting max/min element is currently O(log n) which
 could be reduced to constant if we have 2 more pointers which to be updated 
 with each insertion/deletion.
 
+Each time when a memory is allocated from the heap to be check for safety behavior or 
+use "smart" pointers.
 
-In Tests.cpp are both realized Unit testing and latency benchmark testing.
+
+Compiler used is : CLANG++14
+
