@@ -70,7 +70,7 @@ private:
 			/* equal case*/
 			/* case when the requested price is equal to the current price on the node*/
             node->data.quantity = key.quantity;
-            return node;
+            // return node;
         }
 
         // Update height
@@ -138,21 +138,18 @@ private:
 				/* No children, remove the node*/
 				delete node;
 				return nullptr;
-			}
-
-            if (!node->left || !node->right) {
-                Node* temp = node->left ? node->left : node->right;
-                delete node;
-                return temp;
+            }else if (!node->left || !node->right) {
+                node = node->left ? node->left : node->right;
+            }else{
+                Node* minNodeFromRightTree = minValueNode(node->right);
+                node->data = minNodeFromRightTree->data;
+                node->right = removeNode(node->right, minNodeFromRightTree->data);
             }
 
-
-            Node* minNodeFromRightTree = minValueNode(node->right);
-            node->data = minNodeFromRightTree->data;
-            node->right = removeNode(node->right, minNodeFromRightTree->data);
         }
 
-
+        if(!node)
+            return node;
         // Update height
         node->height = 1 + max(height(node->left), height(node->right));
 
@@ -226,6 +223,11 @@ public:
 
 	void updateOrder(const OrderType& order){
 		/* Update in Orders is O(logn) in Time complexity*/
+        if(order.price <= 0){
+            /* invalid price */
+            return;
+        }
+        
 		if(order.quantity == 0){
 			removeOrder(order);
 		}else{
