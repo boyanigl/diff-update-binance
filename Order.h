@@ -22,7 +22,7 @@ private:
 
     Node* root;
 
-    inline int height(Node* n) { return n ? n->height : 0; }
+    inline unsigned short height(Node* n) { return n ? n->height : 0; }
 
     inline int getBalance(Node* n) { return n ? height(n->left) - height(n->right) : 0; }
 
@@ -117,7 +117,7 @@ private:
         return current;
     }
 
-    // Remove node (if needed)
+    // Remove node
     Node* removeNode(Node* node, const OrderType& key) {
         if (!node)
             return node;
@@ -127,13 +127,7 @@ private:
         else if (key.price > node->data.price)
             node->right = removeNode(node->right, key);
         else {
-			//
-            // if (node->data.quantity > key.quantity) {
-			// 	/* Reducing quantity, but no need of deletion*/
-            //     node->data.quantity -= key.quantity;
-            //     return node;
-            // }
-
+            // Case where the node to be deleted is found
 			if (!node->left && !node->right){
 				/* No children, remove the node*/
 				delete node;
@@ -150,8 +144,6 @@ private:
 
         }
 
-        if(!node)
-            return node;
         // Update height
         node->height = 1 + max(height(node->left), height(node->right));
 
